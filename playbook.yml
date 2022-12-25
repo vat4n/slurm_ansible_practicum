@@ -1,0 +1,40 @@
+##########################################
+# Slurm Ansible Practice Playbook
+# Deploy Ruby App
+##########################################
+---
+- name: "Deployment xpaste ruby application"
+  hosts: "centos"
+  become: true
+  vars:
+    SECRET_KEY_BASE: verysecretkey
+    RAILS_ENV: production
+    RAILS_LOG_TO_STDOUT: 1
+    DB_HOST: 127.0.0.1
+    DB_PORT: 5432
+    DB_NAME: xpaste_db
+    DB_USER: xpaste_user
+    DB_PASSWORD: xpaste_password
+
+
+  roles:
+    - "install_lib"
+    - "postgresql"
+    - "ruby-25"
+    - "xpaste-app"
+    - "geerlingguy.nginx"
+  
+  tasks:
+  - name: "Copy nginx config"
+    ansible.builtin.copy:
+      src: "files/nginx.conf"
+      dest: "/etc/nginx/nginx.conf"
+      owner: "root"
+      group: "root"
+      mode: "0644"
+
+  - name: "Reload nginx"
+    ansible.builtin.service:
+      name: "nginx"
+      state: "reloaded"
+...

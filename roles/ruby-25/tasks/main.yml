@@ -1,0 +1,14 @@
+---
+- name: "Install ruby 2.5 packages"
+  ansible.builtin.yum:
+    name: "{{ item }}"
+    state: "latest"
+    update_cache: true
+  with_items:
+    - "centos-release-scl"
+    - "rh-ruby25"
+    - "rh-ruby25-scldevel"
+    - "rh-ruby25-ruby-devel"
+    - "rh-ruby25-rubygem-bundler"
+    - "nodejs"
+

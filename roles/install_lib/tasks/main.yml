@@ -1,0 +1,13 @@
+---
+- name: "Install common packages"
+  ansible.builtin.yum:
+    name: "{{ item }}"
+    state: "latest"
+    update_cache: true
+  with_items:
+    - "ca-certificates"
+    - "epel-release"
+    - "@development tools"
+    - "libxml2-devel"
+    - "python-pip"
+...
